@@ -36,6 +36,9 @@ import com.fabio.petshop.repository.ProdutoRepository;
 import com.fabio.petshop.repository.RacaRepository;
 import com.fabio.petshop.repository.ServicoRepository;
 
+import com.fabio.petshop.domain.Pesquisa;
+import com.fabio.petshop.repository.PesquisaRepository;
+
 @Component
 public class PopulaDados {
 	
@@ -72,10 +75,13 @@ public class PopulaDados {
 	@Autowired
 	PagamentoRepository pagamentoRepository;
 	
+	// pesquisa
+	@Autowired
+	PesquisaRepository pesquisaRepository;
 	
 	//@PostConstruct
 	public void cadastrar() throws ParseException {
-		
+						
 		Categoria cat1 = new Categoria(null, "Alimento");
 		Categoria cat2 = new Categoria(null, "Remédio");
 		Categoria cat3 = new Categoria(null, "Cosmético");
@@ -161,8 +167,13 @@ public class PopulaDados {
 		srv2.getProdutos().addAll(Arrays.asList(p1, p2, p4));
 		srv3.getProdutos().addAll(Arrays.asList(p3));
 		
-		servicoRepository.saveAll(Arrays.asList(srv1, srv2, srv3));
 		pagamentoRepository.saveAll(Arrays.asList(pgt1, pgt2, pgt3));
+
+		Pesquisa pe1 = new Pesquisa(null, "Atendimento");
+		Pesquisa pe2 = new Pesquisa(null, "Higiene");
+		Pesquisa pe3 = new Pesquisa(null, "Preços");
+
+        pesquisaRepository.saveAll(Arrays.asList(pe1, pe2, pe3));
 		
 	}
 

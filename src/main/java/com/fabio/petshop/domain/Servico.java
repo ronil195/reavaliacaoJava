@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,9 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Servico implements Serializable{
@@ -45,13 +48,25 @@ public class Servico implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "id_pet")
 	private Pet pet;
+
 	
 	@ManyToMany
 	@JoinTable(name = "SERVICO_PRODUTO",
 				joinColumns = @JoinColumn(name = "id_servico"),
 				inverseJoinColumns = @JoinColumn(name = "id_produto"))	
 	private List<Produto> produtos = new ArrayList<>();
-	
+
+
+	/**
+	 * Ronil: adicionar lista dupla de servicos e possibilidade de inserir 
+	 * servicos com as pesquisas já prontas
+	 * 20/05/2022
+	 */
+	@JsonManagedReference
+	@OneToMany(mappedBy = "servico", targetEntity = ServicoPesquisa.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ServicoPesquisa> servicoPesquisas = new ArrayList<>();
+
+
 	public Servico() {
 		
 	}
@@ -163,7 +178,13 @@ public class Servico implements Serializable{
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
 	}
-	
-		
 
+	public List<ServicoPesquisa> getServicoPesquisas() {
+		return servicoPesquisas;
+	}
+
+	public void setServicoPesquisas(List<ServicoPesquisa> servicoPesquisas) {
+		this.servicoPesquisas = servicoPesquisas;
+	}
+		
 }
