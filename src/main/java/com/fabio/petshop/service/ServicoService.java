@@ -7,7 +7,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.fabio.petshop.domain.Servico;
-import com.fabio.petshop.domain.Servico;
 import com.fabio.petshop.repository.ServicoRepository;
 import com.fabio.petshop.service.exceptions.DataIntegrityException;
 import com.fabio.petshop.service.exceptions.ObjetoNaoEncontradoException;
@@ -38,7 +37,7 @@ public class ServicoService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Servico possui produtos, não é possível deletar!");
+			throw new DataIntegrityException("Servico possui produtos ou pesquisas, não é possível deletar!");
 		}
 		
 	}
